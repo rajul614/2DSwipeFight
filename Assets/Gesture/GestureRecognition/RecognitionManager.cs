@@ -95,12 +95,13 @@ public class RecognitionManager : MonoBehaviour
         else
         {
             //  (string, float) result = _dollarOneRecognizer.DoRecognition(points, 64, _templates.GetTemplates());
-            (string, float) result = _currentRecognizer.DoRecognition(points, 64,
+            (string, float, string, float) result = _currentRecognizer.DoRecognitionSecond(points, 64,
                 _templates.RawTemplates);
             string resultText = "";
             if (_currentRecognizer is DollarOneRecognizer)
             {
-                resultText = $"Recognized: {result.Item1}, Score: {result.Item2}";
+                resultText = $"Recognized: {result.Item1}, Score: {result.Item2}\n";
+                resultText += $"Second: {result.Item3}, Score: {result.Item4}\n";
             }
             else if (_currentRecognizer is DollarPRecognizer)
             {

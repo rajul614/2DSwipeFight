@@ -28,6 +28,28 @@ public class DollarPRecognizer : Recognizer, IRecognizer
         return (winnerGesture.Name, minDistance);
     }
 
+    public (string, float,string, float) DoRecognitionSecond(DollarPoint[] points, int n,
+        List<RecognitionManager.GestureTemplate> gestureTemplates)
+    {
+        DollarPoint[] normalizedPoints = Normalize(points, n);
+        RecognitionManager.GestureTemplate winnerGesture = new RecognitionManager.GestureTemplate();
+        float minDistance = Mathf.Infinity;
+        float distance = 0;
+        foreach (RecognitionManager.GestureTemplate gestureTemplate in gestureTemplates)
+        {
+            //Should be stored in proceesed, but for testing purpose we use RawPoints
+            DollarPoint[] normalizedTemplatePoints = Normalize(gestureTemplate.Points, n);
+
+            distance = GreedyCloudMatch(normalizedPoints, normalizedTemplatePoints, n);
+            if (minDistance > distance)
+            {
+                minDistance = distance;
+                winnerGesture = gestureTemplate;
+            }
+        }
+
+        return (winnerGesture.Name, minDistance,winnerGesture.Name, minDistance);
+    }
     private float GreedyCloudMatch(DollarPoint[] points, DollarPoint[] templatePoints, int n)
     {
         float epsilon = 0.5f;

@@ -8,4 +8,7 @@ public interface IRecognizer
 
     public (string, float) DoRecognition(DollarPoint[] points, int n,
         List<RecognitionManager.GestureTemplate> gestureTemplates);
+
+    public (string, float, string, float) DoRecognitionSecond(DollarPoint[] points, int n,
+        List<RecognitionManager.GestureTemplate> gestureTemplates);    
 }

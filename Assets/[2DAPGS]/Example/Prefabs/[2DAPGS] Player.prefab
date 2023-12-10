@@ -163,111 +163,63 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 91a68b1d-49cb-48ce-acd8-a93eee639b71
-    m_ActionName: Player Controls/Move[/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionName: Player Controls/Move[/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/leftStick/right]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 4cc47e6b-123c-40b0-aad4-1d3acd70c0e1
-    m_ActionName: Player Controls/Jump[/Keyboard/space]
+    m_ActionName: Player Controls/Jump[/Keyboard/space,/XInputControllerWindows/buttonNorth]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: a5fbe587-ddec-4efb-afe4-c117ec40cce5
-    m_ActionName: Player Controls/Attack[/Mouse/leftButton]
+    m_ActionName: Player Controls/Attack[/Mouse/leftButton,/XInputControllerWindows/rightShoulder]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 21b0fcbb-6e26-4309-9461-340644d9f838
-    m_ActionName: Player Controls/FireBow[/Keyboard/f]
+    m_ActionName: Player Controls/FireBow[/Keyboard/f,/XInputControllerWindows/leftShoulder]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: b5fa002e-0f3d-46c1-919f-b3b7e22b81e6
-    m_ActionName: Player Controls/Crouch[/Keyboard/s]
+    m_ActionName: Player Controls/Crouch[/Keyboard/s,/XInputControllerWindows/leftStick/down]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c2bfa981-da4f-479e-8108-eaeb536450a9
-    m_ActionName: Player Controls/Block[/Mouse/rightButton]
+    m_ActionName: Player Controls/Block[/Mouse/rightButton,/XInputControllerWindows/rightTrigger]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 856c5034-d58c-47c1-b5a4-65bcc2d3e4c5
-    m_ActionName: Player Controls/Slide[/Keyboard/leftShift]
+    m_ActionName: Player Controls/Slide[/Keyboard/leftShift,/XInputControllerWindows/buttonEast]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c8a8646c-63c8-49c9-abf8-ecd0bd9fb8bf
-    m_ActionName: Player Controls/Inventory[/Keyboard/i]
+    m_ActionName: Player Controls/Inventory[/Keyboard/i,/XInputControllerWindows/start]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: aa18d114-f807-4e46-b9ce-22ff74077b50
-    m_ActionName: Player Controls/UIMove[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionName: Player Controls/UIMove[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/XInputControllerWindows/leftStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/leftStick/right]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: e9d8f2e5-c9d1-4fd8-a91a-1a33e82eb643
-    m_ActionName: Player Controls/UISubmit[/Keyboard/enter]
+    m_ActionName: Player Controls/UISubmit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: b8aa04cf-f0fd-423b-93d5-663b54d007fb
-    m_ActionName: Player Controls/PickUpItem[/Keyboard/e]
+    m_ActionName: Player Controls/PickUpItem[/Keyboard/e,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuickSlot, Assembly-CSharp
-        m_MethodName: OnQuickSlot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 14d4e174-2c69-4c67-b5d5-36c9e2a95803
-    m_ActionName: Player Controls/QuickSlot1[/Keyboard/1]
+    m_ActionName: Player Controls/QuickSlot1[/Keyboard/1,/XInputControllerWindows/dpad/up]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuickSlot, Assembly-CSharp
-        m_MethodName: OnQuickSlot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: f6bd34ee-60a6-47a4-b10c-d8ff7ca5e232
-    m_ActionName: Player Controls/QuickSlot2[/Keyboard/2]
+    m_ActionName: Player Controls/QuickSlot2[/Keyboard/2,/XInputControllerWindows/dpad/right]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuickSlot, Assembly-CSharp
-        m_MethodName: OnQuickSlot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: a67743d9-12dd-49e1-9b49-1a29ea45f309
-    m_ActionName: Player Controls/QuickSlot3[/Keyboard/3]
+    m_ActionName: Player Controls/QuickSlot3[/Keyboard/3,/XInputControllerWindows/dpad/down]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuickSlot, Assembly-CSharp
-        m_MethodName: OnQuickSlot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 5d60e65d-5d1a-4850-9148-9e29e713064e
-    m_ActionName: Player Controls/QuickSlot4[/Keyboard/4]
+    m_ActionName: Player Controls/QuickSlot4[/Keyboard/4,/XInputControllerWindows/dpad/left]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player Controls

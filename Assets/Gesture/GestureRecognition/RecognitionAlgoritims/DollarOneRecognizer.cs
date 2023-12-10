@@ -49,6 +49,13 @@ public class DollarOneRecognizer : Recognizer, IRecognizer
         return Recognize(preparedPoints, gestureTemplates, 250, angle);
     }
 
+    public (string, float, string, float) DoRecognitionSecond(DollarPoint[] points, int n,
+        List<RecognitionManager.GestureTemplate> gestureTemplates)
+    {
+        DollarPoint[] preparedPoints = Normalize(points, n);
+        float angle = 0.5f * (-1 + Mathf.Sqrt(5));
+        return RecognizeSecond(preparedPoints, gestureTemplates, 250, angle);
+    }
 
     private DollarPoint[] RotateToZero(DollarPoint[] points)
     {
@@ -153,6 +160,45 @@ public class DollarOneRecognizer : Recognizer, IRecognizer
 
         double score = 1 - (bestDistance / (0.5f * Math.Sqrt(2 * size * size)));
         return ((string, float)) (bestTemplate.Name, score);
+    }
+
+    private (string, float, string, float) RecognizeSecond(
+        DollarPoint[] points,
+        List<RecognitionManager.GestureTemplate> gestureTemplates,
+        float size,
+        float angle)
+    {
+        float theta = 45;
+        float deltaTheta = 2;
+        float bestDistance = float.MaxValue;
+        float secondBestDistance = float.MaxValue;
+        RecognitionManager.GestureTemplate bestTemplate = new RecognitionManager.GestureTemplate();
+        RecognitionManager.GestureTemplate secondBestTemplate = new RecognitionManager.GestureTemplate();
+
+        //Should be stored in proceesed, but for testing purpose we use RawPoints
+        IEnumerable<RecognitionManager.GestureTemplate> proceedGestures = gestureTemplates.Select(template =>
+            new RecognitionManager.GestureTemplate() {Points = Normalize(template.Points, 64), Name = template.Name});
+
+        foreach (RecognitionManager.GestureTemplate gestureTemplate in proceedGestures.Where(template =>
+            template.Points.Length == points.Length))
+        {
+            float distance = DistanceAtBestAngle(points, gestureTemplate, -theta, theta, deltaTheta, angle);
+            
+            if (distance < bestDistance)
+            {
+                if(bestDistance < secondBestDistance)
+                {
+                    secondBestDistance = bestDistance;
+                    secondBestTemplate = bestTemplate;
+                }
+                bestDistance = distance;
+                bestTemplate = gestureTemplate;
+            }
+        }
+
+        double score = 1 - (bestDistance / (0.5f * Math.Sqrt(2 * size * size)));
+        double secondscore = 1 - (secondBestDistance / (0.5f * Math.Sqrt(2 * size * size)));
+        return ((string, float, string, float)) (bestTemplate.Name, score, secondBestTemplate.Name, secondscore);
     }
 
     private float DistanceAtBestAngle(DollarPoint[] points, RecognitionManager.GestureTemplate template, float thetaA,
