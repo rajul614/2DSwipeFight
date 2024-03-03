@@ -1,5 +1,9 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using UnityEngine;
+// using UnityEngine.InputSystem.EnhancedTouch;
+
+// using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class Player : MonoBehaviour {
 
@@ -9,6 +13,7 @@ public class Player : MonoBehaviour {
     public bool canSlide;
     public bool canUseSword;
     public bool canUseBow;
+    public VariableJoystick variableJoystick;
 
     //How much health does our player character have
     [Header("HEALTH")]
@@ -87,7 +92,11 @@ public class Player : MonoBehaviour {
     public float inventory;
     [HideInInspector]
     public float use;
+    Vector2 touchPosition;
+    Vector2 prevFrameTouchPosition;
+    Vector2 touchStartPosition;
 
+    bool isTouching;
     public static Player instance;
 
     public void Awake() {
@@ -102,7 +111,11 @@ public class Player : MonoBehaviour {
         }
 
         input = new PlayerInputActions();
-        input.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+        // input.PlayerControls.PrimaryContact.started += ctx => Move(ctx);
+        // input.PlayerControls.PrimaryContact.canceled += ctx => Move(ctx);
+        input.PlayerControls.PtimaryContactPosition.performed += ctx => touchPosition = ctx.ReadValue<Vector2>();
+
+        // input.PlayerControls.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
         input.PlayerControls.Jump.performed += ctx => jump = ctx.ReadValue<float>();
         input.PlayerControls.Attack.performed += ctx => attack = ctx.ReadValue<float>();
         input.PlayerControls.FireBow.performed += ctx => fire_bow = ctx.ReadValue<float>();
@@ -114,6 +127,7 @@ public class Player : MonoBehaviour {
         input.PlayerControls.PickUpItem.performed += ctx => use = ctx.ReadValue<float>();
 
     }
+    
 
     public void Start() {
         //Here we are getting characters components
@@ -125,13 +139,59 @@ public class Player : MonoBehaviour {
 
         //Setting maximum health as current health
         maximumHealth = currentHealth;
-
         //Disabling cursor
         // Cursor.lockState = CursorLockMode.Locked;
         // Cursor.visible = true;
     }
 
+
+    private void HandleTouchInput()
+    {   
+                    // Debug.Log("Moved Touch");
+
+        if(Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            touchPosition = touch.position;
+            switch (touch.phase)
+            {
+                
+                case TouchPhase.Began:
+                    // Character starts following the touch.
+                    touchStartPosition = touchPosition;
+                    Debug.Log("Began Touch");
+                    break;
+
+                case TouchPhase.Moved:
+                    Debug.Log("Moved Touch");
+                    break;
+                case TouchPhase.Stationary:
+                    // Character follows the touch.
+                    Debug.Log("Stationary Touch");
+                    break;
+
+                case TouchPhase.Ended:
+                    Debug.Log("Ended Touch");
+                    break;
+                case TouchPhase.Canceled:
+                    // Stop character movement when the touch ends.
+                    Debug.Log("Cancel Touch");
+                    
+                    break;
+            }
+
+            Debug.Log("Direction: " + (touchPosition - prevFrameTouchPosition));
+
+            
+            prevFrameTouchPosition = touchPosition;
+
+        }
+        
+    }
+
     public void Update() {
+        
+        // HandleTouchInput();
         if (currentHealth <= 0) {
 
             // If current health drops bellow zero we want it to stay at zero and we also are going to set Dead animation trigger
@@ -139,7 +199,10 @@ public class Player : MonoBehaviour {
             player_animator.SetBool("Dead", true);
         }
         else if (currentHealth > 0) { // If player characters health are above zero
+            
+
             if (!onLedge) { // If player character is not holding on ledge
+                
                 if (canControl) { // If player character can be controlled
                     #region SET GROUNDIND, SWIMMING AND RESET THINGS
                     if (checkGroundHelpCollider.IsTouchingLayers(waterLayer)) { //Ground is checked with capsule collider component
@@ -186,19 +249,20 @@ public class Player : MonoBehaviour {
                     else {
                         jump = 0f;
                     }
-
+                    
                     if (checkGroundHelpCollider.IsTouchingLayers(groundLayer)) { //Here we see character is on groundLayer variable
                         player_grounded = true;
                         jumpCount = 0;
-
                         if (!dustImpact) { //This is used to instantiate dust particle effect
                             GameObject effectGo = Instantiate(effectsPrefab, transform.position, Quaternion.identity);
                             effectGo.GetComponent<Effect>().effectsAnimator.SetInteger("EffectsState", 1);
-                            sfxPlayer.PlaySFX(AudioClipType.GroundImpact);
+                            // sfxPlayer.PlaySFX(AudioClipType.GroundImpact);
                             dustImpact = true;
+
                         }
                     }
                     else {
+
                         player_grounded = false;
                         dustImpact = false;
 
@@ -222,8 +286,9 @@ public class Player : MonoBehaviour {
                         flipped = true;
                     }
                     #endregion
-
                     if (!player_in_water) {
+                    
+
                         #region MOVEMENT
                         //Here we are checking if character is not in crouch position and if he is not moving
                         if (crouch < 0.5f && sliding == false) {
@@ -234,6 +299,7 @@ public class Player : MonoBehaviour {
                         }
 
                         if (player_grounded) {
+                            
                             if (crouch >= 0.5f) { //If crouch button is pressed we will play crouch animation (animation has on it event to turn off collider when playing it)
                                 if (currentOneWayPlatform != null) {
                                     StartCoroutine(DisableCollision());
@@ -259,11 +325,12 @@ public class Player : MonoBehaviour {
                                 slide = 0f; //Reset slide button press
                             }
                             else if (!sliding) {
+                                
                                 if (player_rigidbody2d.velocity.magnitude != 0f) {
                                     player_animator.SetInteger("AnimState", 1);
                                 }
                                 else {
-                                    player_animator.SetInteger("AnimState", 0);
+                                    // player_animator.SetInteger("AnimState", 0);
                                 }
                             }
                         }
@@ -281,7 +348,7 @@ public class Player : MonoBehaviour {
                         if (player_rigidbody2d.velocity.magnitude != 0f && !player_grounded) { //If we are moving on X axis and we are on ground GROUNDED
                             if (canUseSword && attack == 1f) {
                                 if (Time.time >= nextAttackTime) {
-                                    player_animator.SetFloat("AttackType", Random.Range(0f, 2f));
+                                    player_animator.SetFloat("AttackType", UnityEngine.Random.Range(0f, 2f));
                                     player_animator.SetTrigger("Attack");
                                     sfxPlayer.PlaySFX(AudioClipType.Swing);
                                     nextAttackTime = Time.time + 1f / meleeRate;
@@ -299,7 +366,7 @@ public class Player : MonoBehaviour {
                             if (crouch < 0.5f && block == 0f) {
                                 if (canUseSword && attack == 1f) {
                                     if (Time.time >= nextAttackTime) {
-                                        player_animator.SetFloat("AttackType", Random.Range(0f, 2f));
+                                        player_animator.SetFloat("AttackType", UnityEngine.Random.Range(0f, 2f));
                                         player_animator.SetTrigger("Attack");
                                         sfxPlayer.PlaySFX(AudioClipType.Swing);
                                         nextAttackTime = Time.time + 1f / meleeRate;

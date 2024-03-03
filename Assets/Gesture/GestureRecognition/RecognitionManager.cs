@@ -22,6 +22,8 @@ public class RecognitionManager : MonoBehaviour
     private IRecognizer _currentRecognizer = _dollarOneRecognizer;
     private RecognizerState _state = RecognizerState.RECOGNITION;
 
+    public Action<string, float> ResultEvent;
+
     public enum RecognizerState
     {
         TEMPLATE,
@@ -110,6 +112,7 @@ public class RecognitionManager : MonoBehaviour
 
             _recognitionResult.text = resultText;
             Debug.Log(resultText);
+            ResultEvent?.Invoke(result.Item1, result.Item2);
         }
     }
 
